@@ -68,7 +68,7 @@ export default function Suggestion({ storeDetail }: any) {
 
             {/* Pharmacy Information */}
             <div className="mt-6 p-4 bg-blue-50 rounded-lg shadow-sm">
-                <h2 className="text-lg font-bold text-blue-800">Collect your medecine here :</h2>
+                <h2 className="text-lg font-bold text-blue-800">Near By Medical Store:</h2>
                 <div className="flex items-center mt-2">
                     {/* <img src={pharmacy.photo} alt="Pharmacy" className="w-12 h-12 mr-3" /> */}
                     <div>
@@ -77,17 +77,18 @@ export default function Suggestion({ storeDetail }: any) {
                         <p className="text-sm font-medium text-gray-600">
                             Rating: ⭐ {pharmacy.rating} | {pharmacy.openNow ? "Open Now" : "Closed"}
                         </p>
-                        {/* <a
-                            href={pharmacy.googleMapsLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-blue-600 hover:underline"
+
+                        <button
+                            disabled={suggestion == '' ? true : false}
+                            className="mt-2 px-3 py-1 text-xs font-medium text-white bg-teal-600 rounded-md hover:bg-teal-700 transition cursor-pointer disabled:bg-gray-300 disabled:cursor-default"
+                            onClick={() => { toast.showToast("Ordering suggested items...") }}
                         >
-                            View on Google Maps
-                        </a> */}
+                            Order Suggested Items
+                        </button>
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }
