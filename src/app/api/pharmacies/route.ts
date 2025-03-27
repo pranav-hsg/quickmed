@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { APIKEYS } from "../api_keys";
 
 export default async function get(req: any, res: any) {
     console.log("good")
@@ -31,16 +32,16 @@ export async function GET(req: NextRequest, context: any) {
     const d = req.nextUrl.searchParams
     const latitude = d.get('latitude');
     const longitude = d.get('longitude');
-    const apiKey = "something";
+    const apiKey = APIKEYS.googlePlaces;
 
     const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=15000&type=drugstore&key=${apiKey}`;
 
 
 
     try {
-        // const response = await fetch(url, { method: "GET" });
-        // const data = await response.json();
-        return new Response(JSON.stringify(ds), {
+        const response = await fetch(url, { method: "GET" });
+        const data = await response.json();
+        return new Response(JSON.stringify(data), {
             status: 200,
             headers: { "Content-Type": "application/json" }
         });

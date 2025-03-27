@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { APIKEYS } from "../api_keys";
 
 export async function GET(req: NextRequest, context: any) {
     const d = req.nextUrl.searchParams
@@ -8,7 +9,7 @@ export async function GET(req: NextRequest, context: any) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer sk-or-v1-k", // Add your API key if required
+                "Authorization": `Bearer ${APIKEYS.deepseek}`,
             },
             body: JSON.stringify({
                 model: "deepseek/deepseek-chat-v3-0324:free",

@@ -105,7 +105,7 @@ const MedicalStores = () => {
     return (
         <div className="p-8">
 
-            <h1 className="text-2xl font-bold my-4">Medical Stores Near Me</h1>
+            <h1 className="text-4xl font-extrabold text-teal-700 mb-4">Medical Stores Near Me</h1>
             {/* Manual Location Input */}
             {(!geolocationAvailable) && (
                 <div className="mb-4 space-y-3 flex flex-col ">
