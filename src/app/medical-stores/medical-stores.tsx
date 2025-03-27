@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from "@/lib/utils"
 import { useToast } from "@/utils/toastcontext";
+import { redirect } from "next/navigation";
 
 interface Pharmacy {
     name: string;
@@ -97,6 +98,9 @@ const MedicalStores = () => {
             showToast("Please enter both latitude and longitude.", 'error');
         }
     };
+    const routeTo = () => {
+        redirect('/suggestion')
+    }
 
     return (
         <div className="p-8">
@@ -141,6 +145,7 @@ const MedicalStores = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-center">
                 {pharmacies.map((pharmacy, index) => (
                     <div
+                        onClick={routeTo}
                         key={index}
                         className="bg-white w-[250px] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all p-3 mx-auto"
                     >
