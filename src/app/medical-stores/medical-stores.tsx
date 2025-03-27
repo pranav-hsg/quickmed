@@ -138,23 +138,23 @@ const MedicalStores = () => {
 
             {loading && <p className="mb-4 text-gray-600">Loading pharmacies...</p>}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-center">
                 {pharmacies.map((pharmacy, index) => (
                     <div
                         key={index}
-                        className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all"
+                        className="bg-white w-[250px] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all p-3 mx-auto"
                     >
                         <img
                             src={pharmacy.icon}
                             alt={pharmacy.name}
-                            className="w-full h-48 object-cover"
+                            className="w-full h-32 object-cover rounded-md"
                         />
-                        <div className="p-4 space-y-2">
-                            <h2 className="text-lg font-bold text-gray-800">{pharmacy.name}</h2>
-                            <p className="text-sm text-gray-600">{pharmacy.vicinity}</p>
-                            <div className="flex items-center">
-                                <Star className="w-5 h-5 text-yellow-500" />
-                                <span className={`ml-1 font-semibold ${pharmacy.rating ? "text-yellow-700" : "text-gray-500"}`}>
+                        <div className="p-3 space-y-2">
+                            <h2 className="text-base font-semibold text-gray-800">{pharmacy.name}</h2>
+                            <p className="text-sm text-gray-600 truncate">{pharmacy.vicinity}</p>
+                            <div className="flex items-center text-sm">
+                                <Star className="w-4 h-4 text-yellow-500" />
+                                <span className={`ml-1 font-medium ${pharmacy.rating ? "text-yellow-700" : "text-gray-500"}`}>
                                     {pharmacy.rating || "N/A"}
                                 </span>
                             </div>
@@ -162,6 +162,7 @@ const MedicalStores = () => {
                     </div>
                 ))}
             </div>
+
             {pharmacies.length === 0 && !loading && !error && (
                 <div className="text-gray-500 text-center py-8">No pharmacies found.</div>
             )}
