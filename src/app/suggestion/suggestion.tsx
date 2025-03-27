@@ -1,12 +1,23 @@
 'use client'
+import { usePharmacy } from "@/utils/pharmacy";
 import { useToast } from "@/utils/toastcontext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Suggestion({ storeDetail }: any) {
     const [disease, setDisease] = useState("");
     const [suggestion, setSuggestion] = useState("");
     const [loading, setLoading] = useState(false);
     const toast = useToast();
+    const { selectedPharmacy: pharmacy } = usePharmacy();
+    // let pharmacy = null;
+    // useEffect(() => {
+    //     (function async(){ 
+    //         const photo = selectedPharmacy?.['photos']?.[0]?.['photo_reference'];
+    //         try{
+    //             const data = await fetch(`api/photo?photoreference=${photo}`);
+    //         }
+    //     }())
+    // },[])
     const fetchSuggestion = async () => {
         if (!disease.trim()) return toast.showToast("Please enter a disease!", 'error');
 
@@ -29,7 +40,7 @@ export default function Suggestion({ storeDetail }: any) {
 
     return (
         <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">Disease Suggestion</h1>
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">Medicine Suggestion</h1>
 
             <input
                 type="text"
@@ -54,6 +65,29 @@ export default function Suggestion({ storeDetail }: any) {
                     <p className="text-gray-700">{suggestion}</p>
                 </div>
             )}
+
+            {/* Pharmacy Information */}
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg shadow-sm">
+                <h2 className="text-lg font-bold text-blue-800">Collect your medecine here :</h2>
+                <div className="flex items-center mt-2">
+                    {/* <img src={pharmacy.photo} alt="Pharmacy" className="w-12 h-12 mr-3" /> */}
+                    <div>
+                        <h3 className="text-md font-semibold">{pharmacy.name}</h3>
+                        <p className="text-sm text-gray-700">{pharmacy.address}</p>
+                        <p className="text-sm font-medium text-gray-600">
+                            Rating: ⭐ {pharmacy.rating} | {pharmacy.openNow ? "Open Now" : "Closed"}
+                        </p>
+                        {/* <a
+                            href={pharmacy.googleMapsLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-600 hover:underline"
+                        >
+                            View on Google Maps
+                        </a> */}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

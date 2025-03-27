@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { cn } from "@/lib/utils"
 import { useToast } from "@/utils/toastcontext";
 import { redirect } from "next/navigation";
+import { usePharmacy } from "@/utils/pharmacy";
 
 interface Pharmacy {
     name: string;
@@ -22,6 +23,7 @@ const MedicalStores = () => {
     const [pharmacies, setPharmacies] = useState<Pharmacy[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { setSelectedPharmacy } = usePharmacy();
     const [manualLocation, setManualLocation] = useState({
         latitude: '',
         longitude: '',
@@ -98,7 +100,8 @@ const MedicalStores = () => {
             showToast("Please enter both latitude and longitude.", 'error');
         }
     };
-    const routeTo = () => {
+    const routeTo = (pharmacy: any) => {
+        setSelectedPharmacy(pharmacy)
         redirect('/suggestion')
     }
 
@@ -145,28 +148,39 @@ const MedicalStores = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-center">
                 {pharmacies.map((pharmacy, index) => (
                     <div
-                        onClick={routeTo}
                         key={index}
-                        className="bg-white w-[250px] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all p-3 mx-auto"
+                        className="bg-white w-[250px] rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all p-3 mx-auto h-full flex flex-col"
                     >
                         <img
                             src={pharmacy.icon}
                             alt={pharmacy.name}
                             className="w-full h-32 object-cover rounded-md"
                         />
-                        <div className="p-3 space-y-2">
-                            <h2 className="text-base font-semibold text-gray-800">{pharmacy.name}</h2>
-                            <p className="text-sm text-gray-600 truncate">{pharmacy.vicinity}</p>
-                            <div className="flex items-center text-sm">
-                                <Star className="w-4 h-4 text-yellow-500" />
-                                <span className={`ml-1 font-medium ${pharmacy.rating ? "text-yellow-700" : "text-gray-500"}`}>
-                                    {pharmacy.rating || "N/A"}
-                                </span>
+                        <div className="p-3 flex flex-col flex-grow justify-between">
+                            <div className="space-y-2">
+                                <h2 className="text-base font-semibold text-gray-800">{pharmacy.name}</h2>
+                                <p className="text-sm text-gray-600 truncate">{pharmacy.vicinity}</p>
+                                <div className="flex items-center text-sm">
+                                    <Star className="w-4 h-4 text-yellow-500" />
+                                    <span className={`ml-1 font-medium ${pharmacy.rating ? "text-yellow-700" : "text-gray-500"}`}>
+                                        {pharmacy.rating || "N/A"}
+                                    </span>
+                                </div>
                             </div>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    routeTo(pharmacy);
+                                }}
+                                className="mt-4 bg-teal-600 hover:bg-teal-700 cursor-pointer text-white text-sm font-medium py-1.5 px-3 rounded-md transition"
+                            >
+                                Suggest Medicine
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
+
 
             {pharmacies.length === 0 && !loading && !error && (
                 <div className="text-gray-500 text-center py-8">No pharmacies found.</div>
